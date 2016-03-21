@@ -1,0 +1,5 @@
+require_relative 'mailgun/api/mail'
+require_relative 'mailgun/api'
+require_relative 'mailgun/client'
+require_relative 'mailgun/exception'
+require_relative 'mailgun/mail'
