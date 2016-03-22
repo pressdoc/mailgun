@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.version     = "1.0"
   spec.authors     = ['Menno Wildeboer']
   spec.email       = 'menno@prco.com'
-  spec.summary     = 'Official SendGrid Gem'
+  spec.summary     = 'Mailgun gem'
   spec.description = 'Interact with Mailgun in Ruby'
   spec.homepage    = 'http://github.com/prco/mailgun'
   spec.license     = 'MIT'
