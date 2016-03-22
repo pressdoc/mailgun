@@ -3,7 +3,7 @@ module Mailgun
     MAX_TAGS=3
     MAX_RECIPIENTS=1000
 
-    attr_accessor :from, :to, :cc, :bcc :subject, :text, :html,
+    attr_accessor :from, :to, :cc, :bcc, :subject, :text, :html,
       :reply_to, :delivery_time, :campaign, :dkim, :testmode, :tags, :tracking, :variables
 
     def initialize(params = {})
@@ -33,7 +33,7 @@ module Mailgun
         'text' => text,
         'html' => html,
         'o:campaign' => campaign,
-        "o:deliverytime" => delivery_time.to_s
+        "o:deliverytime" => delivery_time.to_s,
         "o:dkim" => to_boolean_string(dkim),
         'o:tag' => tags,
         "o:testmode" => to_boolean_string(testmode),
@@ -41,8 +41,10 @@ module Mailgun
         'h:Reply-To' => reply_to
       }.reject {|_, v| v.nil? || v.empty?}
 
-      variables.each do |k, v|
-        payload[v:"#{k}"] = v unless v.nil? || v.empty?
+      if variables
+        variables.each do |k, v|
+          payload[v:"#{k}"] = v unless v.nil? || v.empty?
+        end
       end
       payload
     end

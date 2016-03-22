@@ -1,1 +1,1 @@
-require_relative '../lib/sendgrid'
+require_relative '../lib/mailgun'
