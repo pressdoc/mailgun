@@ -3,11 +3,10 @@ require 'faraday'
 module Mailgun
   class Client
     include Mailgun::API
-    attr_reader :api_key, :domain
+    attr_reader :api_key
 
-    def initialize(api_key, domain)
+    def initialize(api_key)
       @api_key = api_key
-      @domain = domain
     end
 
     # Perform an HTTP GET request
@@ -32,9 +31,11 @@ module Mailgun
 
     def request(method, path, params = {})
       params = params.respond_to?(:to_h) ? params.to_h : params
-      response = connection.send(method, path, params)
+      response = connection.send(method, path, params) do |request|
+
+      end
       fail Mailgun::Exception, response.body if response.status != 200
-      Mailgun::Response.new(response)
+      Mailgun::Response.new(code: response.status, headers: response.headers, body: response.body)
     end
 
     def connection
@@ -50,7 +51,7 @@ module Mailgun
     end
 
     def url
-      "https://api:#{api_key}@api.mailgun.net/v3/#{domain}"
+      "https://api:#{api_key}@api.mailgun.net/v3/"
     end
   end
 end
