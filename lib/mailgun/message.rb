@@ -17,7 +17,7 @@ module Mailgun
     def tags=(val=[])
       if val.is_a? String
         @tags = [val]
-      elsif val.is_a Array
+      elsif val.is_a? Array
         raise "Maximum of #{MAX_TAGS} tags supported" if val.count > MAX_TAGS
         @tags = val
       end
@@ -42,6 +42,7 @@ module Mailgun
       }.reject {|_, v| v.nil? || v.empty?}
 
       if variables
+        variables.symbolize_keys!
         variables.each do |k, v|
           payload[v:"#{k}"] = v unless v.nil? || v.empty?
         end
