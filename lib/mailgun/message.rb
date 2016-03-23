@@ -44,7 +44,7 @@ module Mailgun
       if variables
         variables.symbolize_keys!
         variables.each do |k, v|
-          payload[v:"#{k}"] = v unless v.nil? || v.empty?
+          payload[v:"#{k}"] = v
         end
       end
       payload
