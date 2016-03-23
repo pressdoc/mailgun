@@ -35,6 +35,32 @@ describe 'Mailgun::Client' do
       expect(res.code).to eq(200)
     end
 
+    it 'should make a request when the message contains tags' do
+      stub_request(:post, 'https://api:test@api.mailgun.net/v3/pr.co/messages')
+        .with(:headers => headers)
+        .to_return(body: {message: 'success'}.to_json, status: 200, headers: {'X-TEST' => 'yes'})
+
+      client = Mailgun::Client.new('test')
+      message = Mailgun::Message.new
+      message.tags = [ "Hello", "World" ]
+      res = client.send_message(message, 'pr.co')
+
+      expect(res.code).to eq(200)
+    end
+
+    it 'should make a request when the message contains variables' do
+      stub_request(:post, 'https://api:test@api.mailgun.net/v3/pr.co/messages')
+        .with(:headers => headers)
+        .to_return(body: {message: 'success'}.to_json, status: 200, headers: {'X-TEST' => 'yes'})
+
+      client = Mailgun::Client.new('test')
+      message = Mailgun::Message.new
+      message.variables = { a: "Hello",  b: "World" }
+      res = client.send_message(message, 'pr.co')
+
+      expect(res.code).to eq(200)
+    end
+
     it 'should raise a Mailgun::Exception if status is not 200' do
       stub_request(:post, 'https://api:yolo@api.mailgun.net/v3/pr.co/messages')
         .with(:headers => headers)

@@ -42,9 +42,8 @@ module Mailgun
       }.reject {|_, v| v.nil? || v.empty?}
 
       if variables
-        variables.symbolize_keys!
         variables.each do |k, v|
-          payload[v:"#{k}"] = v
+          payload["v:#{k.to_s}"] = v
         end
       end
       payload
