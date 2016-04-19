@@ -4,4 +4,6 @@ module Mailgun
       super(message)
     end
   end
+
+  class ParameterError < Exception; end
 end

@@ -1,8 +1,14 @@
 module Mailgun
   module API
-    module Messages
-      def send_message(message, domain)
-        post("#{domain}/messages", message)
+    class Messages
+      attr_reader :client
+
+      def initialize(client)
+        @client = client
+      end
+
+      def send(message, domain)
+        client.post("#{domain}/messages", message)
       end
     end
   end

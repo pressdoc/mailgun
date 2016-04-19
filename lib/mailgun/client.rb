@@ -20,9 +20,9 @@ module Mailgun
     end
 
     # Perform an HTTP PUT request
-    def put(path, params = {})
-      request(:put, path, params)
-    end
+    # def put(path, params = {})
+    #   request(:put, path, params)
+    # end
 
     # Perform an HTTP DELETE request
     def delete(path, params = {})

@@ -32,5 +32,8 @@ build/
 # .ruby-version
 # .ruby-gemset
 
+.ruby-env.yml
+
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
+
