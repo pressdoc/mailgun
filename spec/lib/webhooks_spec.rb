@@ -10,9 +10,6 @@ describe 'Mailgun::API::Webhooks', vcr: vcr_opts do
   let(:testhookup) { 'bounceup' }
 
   it 'creates a webhook' do
-
-    puts TESTDOMAIN
-
     result = client.webhooks.add(domain, 'bounce', "http://example.com/mailgun/events/#{testhook}")
     expect(result.body["message"]).to eq("Webhook has been created")
     expect(result.body["webhook"]["url"]).to eq("http://example.com/mailgun/events/#{testhook}")
