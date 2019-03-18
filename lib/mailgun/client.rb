@@ -3,10 +3,11 @@ require 'faraday'
 module Mailgun
   class Client
     include Mailgun::API
-    attr_reader :api_key
+    attr_reader :api_key, :api_host
 
-    def initialize(api_key)
+    def initialize(api_key, api_host = 'api.mailgun.net')
       @api_key = api_key
+      @api_host = api_host
     end
 
     # Perform an HTTP GET request
@@ -51,7 +52,7 @@ module Mailgun
     end
 
     def url
-      "https://api:#{api_key}@api.mailgun.net/v3/"
+      "https://api:#{api_key}@#{api_host}/v3/"
     end
   end
 end
