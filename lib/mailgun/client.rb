@@ -61,10 +61,10 @@ module Mailgun
     end
 
     def api_host_from_region(region)
-      fail Mailgun::Exception "No region provided" if region.blank?
+      # fail Mailgun::Exception "No region provided" if region.blank?
 
       api_host = API_HOSTS_PER_REGION[region.upcase]
-      fail Mailgun::Exception "No API host found for region provided: #{region}" if api_host.blank?
+      # fail Mailgun::Exception "No API host found for region provided: #{region}" if api_host.blank?
 
       api_host
     end
