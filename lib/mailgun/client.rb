@@ -57,7 +57,7 @@ module Mailgun
     end
 
     def url
-      "https://api:#{api_key}@api.mailgun.net/v3/"
+      "https://api:#{api_key}@#{api_host}/v3/"
     end
 
     def api_host_from_region(region)
