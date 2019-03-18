@@ -6,8 +6,8 @@ module Mailgun
     API_HOSTS_PER_REGION = {
       'US' => 'api.mailgun.net',
       'EU' => 'api.eu.mailgun.net'
-    }
-    attr_reader :api_key
+    }.freeze
+    attr_reader :api_key, :api_host
 
     # API region, default to US region if not provided
     def initialize(api_key, api_region = 'US')
@@ -61,8 +61,10 @@ module Mailgun
     end
 
     def api_host_from_region(region)
-      api_host = API_HOSTS_PER_REGION[region]
-      fail Mailgun::Exception "No API host found for region provided: #{region}" unless api_host
+      fail Mailgun::Exception "No region provided" if region.blank?
+
+      api_host = API_HOSTS_PER_REGION[region.upcase]
+      fail Mailgun::Exception "No API host found for region provided: #{region}" if api_host.blank?
 
       api_host
     end
