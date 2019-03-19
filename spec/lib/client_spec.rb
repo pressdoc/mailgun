@@ -4,14 +4,25 @@ require 'webmock/rspec'
 
 describe 'Mailgun::Client' do
   let(:client) { Mailgun::Client.new(APIKEY) }
-  let(:client_with_host) { Mailgun::Client.new(APIKEY, 'api.mailgun.net') }
 
   it 'should accept an api_key' do
     expect(client).to be_an_instance_of(Mailgun::Client)
   end
 
-  it 'should accept an api_host' do
-    expect(client_with_host).to be_an_instance_of(Mailgun::Client)
+  it 'should default to the US api_host' do
+    expect(client.api_host).to be == 'api.mailgun.net'
+  end
+
+  it 'should accept an API region' do
+    expect(Mailgun::Client.new(APIKEY, 'EU')).to be_an_instance_of(Mailgun::Client)
+  end
+
+  it 'should correctly set the API region for the EU region' do
+    expect(Mailgun::Client.new(APIKEY, 'EU').api_host).to be == 'api.eu.mailgun.net'
+  end
+
+  it 'should set the correct URL for the EU region' do
+    expect(Mailgun::Client.new(APIKEY, 'EU').url).to be == "https://api:#{APIKEY}@api.eu.mailgun.net/v3/"
   end
 
   it 'should have a domains api' do
