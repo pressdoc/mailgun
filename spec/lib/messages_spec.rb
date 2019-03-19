@@ -20,7 +20,7 @@ describe 'Mailgun::API::Messages' do
 
     it 'should have an h:Reply-To header when setting reply_to' do
       stub_request(:post, 'https://api:test@api.mailgun.net/v3/pr.co/messages')
-        .with(:body => { "h:Reply-To": "test@pr.co" }, :headers => headers)
+        .with(:body => { "h:Reply-To" => "test@pr.co" }, :headers => headers)
         .to_return(body: {message: 'success'}.to_json, status: 200, headers: {'X-TEST' => 'yes'})
 
       client = Mailgun::Client.new('test')
