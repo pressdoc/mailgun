@@ -4,10 +4,13 @@ module Mailgun
     MAX_RECIPIENTS=1000
 
     attr_accessor :from, :to, :cc, :bcc, :subject, :text, :html,
-      :reply_to, :delivery_time, :campaign, :dkim, :testmode, :tags, :tracking, :variables
+      :reply_to, :delivery_time, :campaign, :dkim, :testmode, :tags,
+      :tracking, :tracking_clicks, :tracking_opens, :variables
 
     def initialize(params = {})
       tracking = true
+      tracking_clicks = true
+      tracking_opens = true
       params.each do |k, v|
         send(:"#{k}=", v) unless v.nil?
       end
@@ -38,6 +41,8 @@ module Mailgun
         'o:tag' => tags,
         "o:testmode" => to_boolean_string(testmode),
         "o:tracking" => to_boolean_string(tracking),
+        "o:tracking-clicks" => to_boolean_string(tracking_clicks),
+        "o:tracking-opens" => to_boolean_string(tracking_opens,
         'h:Reply-To' => reply_to
       }.reject {|_, v| v.nil? || v.empty?}
 
