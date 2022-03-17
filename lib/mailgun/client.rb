@@ -3,10 +3,16 @@ require 'faraday'
 module Mailgun
   class Client
     include Mailgun::API
-    attr_reader :api_key
+    API_HOSTS_PER_REGION = {
+      'US' => 'api.mailgun.net',
+      'EU' => 'api.eu.mailgun.net'
+    }.freeze
+    attr_reader :api_key, :api_host
 
-    def initialize(api_key)
+    # API region, default to US region if not provided
+    def initialize(api_key, api_region = 'US')
       @api_key = api_key
+      @api_host = api_host_from_region(api_region)
     end
 
     # Perform an HTTP GET request
@@ -51,7 +57,16 @@ module Mailgun
     end
 
     def url
-      "https://api:#{api_key}@api.mailgun.net/v3/"
+      "https://api:#{api_key}@#{api_host}/v3/"
+    end
+
+    def api_host_from_region(region)
+      fail Mailgun::Exception, "No region provided" if region.nil?
+
+      api_host = API_HOSTS_PER_REGION[region.upcase]
+      fail Mailgun::Exception, "No API host found for region provided: #{region}" if api_host.nil?
+
+      api_host
     end
   end
 end
