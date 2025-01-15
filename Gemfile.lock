@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     mailgun (1.1)
-      faraday (~> 0.9)
+      faraday
       mimemagic
 
 GEM
@@ -16,7 +16,7 @@ GEM
     diff-lcs (1.2.5)
     docile (1.1.5)
     dotenv (2.1.0)
-    faraday (0.15.4)
+    faraday (> 1, < 2)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.10)
     formatador (0.2.5)
