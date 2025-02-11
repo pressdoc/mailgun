@@ -48,7 +48,7 @@ module Mailgun
       @connection ||= Faraday.new(url: url) do |conn|
         conn.request :multipart
         conn.request :url_encoded
-        conn.adapter adapter
+        conn.adapter Faraday.default_adapter
       end
     end
 
